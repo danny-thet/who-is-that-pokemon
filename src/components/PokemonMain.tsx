@@ -1,24 +1,19 @@
-import { Box, Flex, Input } from "@chakra-ui/react";
+import { Box, Flex, Heading, Input } from "@chakra-ui/react";
 export const PokemonMain = () => {
 	return (
-		<Box textAlign="center" backgroundColor="blue" h="100%" minH="100vh">
-			<Flex
-				flexWrap="wrap"
-				mx="auto"
-				width="80%"
-				borderLeft="2px"
-				borderRight="2px"
-				borderColor="white"
-				h="100%"
-				minH="100vh"
-			>
+		<Box textAlign="center" h="100%" minH="100vh" backgroundColor="#FEF9E7">
+			<Heading pt="50px" as="h1">
+				Who is That Pokemon?
+			</Heading>
+			<Flex flexWrap="wrap" mx="auto" width="80%" h="100%" minH="100vh">
 				<Box
 					mx="auto"
 					marginTop="50px"
-					width="400px"
-					h="400px"
-					border="4px"
-					borderColor="white"
+					width="500px"
+					minH="300px"
+					maxH="500px"
+					border="2px"
+					borderColor="gray.200"
 					borderRadius="4px"
 					bgImg="url(/background.png)"
 					bgPos="center"
@@ -26,19 +21,21 @@ export const PokemonMain = () => {
 					bgSize="cover"
 				/>
 				<Box
-					w="400px"
-					h="400px"
+					w="500px"
+					maxH="500px"
 					mx="auto"
-					marginTop="50px"
-					border="4px"
-					borderColor="white"
+					my="50px"
+					border="2px"
+					borderColor="gray.200"
 					borderRadius="4px"
 				>
 					<Box>Title</Box>
-					<Input border="2px" borderColor="gray" mx="5px" w="300px"></Input>
+					<Box>
+						<Input border="2px" borderColor="gray" mx="5px" w="300px"></Input>
+					</Box>
 					<Box mx="auto" display="inline-block">
 						<Flex>
-							<Box>Streak</Box>
+							<Box>Scores</Box>
 							<Box>Hints</Box>
 						</Flex>
 					</Box>
