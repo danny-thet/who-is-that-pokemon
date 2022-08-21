@@ -21,8 +21,7 @@ export const PokemonGuessBox = ({
 		<Box
 			w="500px"
 			minH="450px"
-			mx="auto"
-			my="50px"
+			m="50px auto"
 			borderRadius="4px"
 			backgroundColor="white"
 			boxShadow={`0px 0px 5px 5px ${boxShadowColor}`}
