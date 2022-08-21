@@ -7,8 +7,9 @@ const limit = 650;
 
 export const PokemonMain = () => {
 	const [pokemonData, setPokemonData] = useState<Pokemon>();
-	const [isCorrect, setIsCorrect] = useState<boolean>(false);
+	const [isShowPokemon, setIsShowPokemon] = useState<boolean>(false);
 	const pokemonName = pokemonData?.name;
+	const pokemonUrl = pokemonData?.sprites?.front_shiny ?? "";
 
 	const characterCount = pokemonName?.length ?? 0;
 	const toRemove = characterCount - 2;
@@ -19,11 +20,16 @@ export const PokemonMain = () => {
 
 	const [scores, setScores] = useState<number>(0);
 
+	const [pokemonImage, setPokemonImage] = useState<string>(pokemonUrl);
+
 	const fetchPokemon = async (pokemonId: number) => {
 		const api = new PokemonClient();
 		await api
 			.getPokemonById(pokemonId)
-			.then((data) => setPokemonData(data))
+			.then((data) => {
+				setPokemonData(data);
+				setPokemonImage(data?.sprites?.front_shiny ?? "");
+			})
 			.catch((error) => console.error(error));
 	};
 
@@ -45,14 +51,19 @@ export const PokemonMain = () => {
 			if (answer === pokemonData?.name) {
 				setScores(scores + 1);
 			}
-			setIsCorrect(true);
+			setIsShowPokemon(true);
 			setTimeout(async () => {
+				setPokemonImage("");
 				const newId = generateRandomNumber();
 				await fetchPokemon(newId);
-				setIsCorrect(false);
+				setIsShowPokemon(false);
 			}, 2000);
 		}
 	};
+
+	const imageTransition = isShowPokemon ? "filter 1s ease-out" : "initial";
+
+	const imageFilter = isShowPokemon ? "initial" : "brightness(0%)";
 
 	return (
 		<Box textAlign="center" h="100%" minH="100vh" backgroundColor="#FEF9E7">
@@ -70,7 +81,8 @@ export const PokemonMain = () => {
 					mx="auto"
 					marginTop="50px"
 					width="500px"
-					minH="300px"
+					minW="380px"
+					minH="380px"
 					maxH="500px"
 					borderRadius="4px"
 					bgImg="url(/background.png)"
@@ -79,13 +91,12 @@ export const PokemonMain = () => {
 					bgSize="cover"
 					boxShadow="0px 0px 5px 5px lightgray"
 				>
-					{pokemonData && (
-						<Image
-							src={pokemonData?.sprites?.front_shiny ?? ""}
-							filter="brightness(0%)"
-							alt="Pokemon"
-						/>
-					)}
+					<Image
+						src={pokemonImage}
+						transition={imageTransition}
+						filter={imageFilter}
+						alt=""
+					/>
 				</Box>
 				<Box
 					w="500px"
@@ -96,10 +107,10 @@ export const PokemonMain = () => {
 					borderColor="white"
 					borderRadius="4px"
 					backgroundColor="white"
-					boxShadow=" 5px 5px tomato"
+					boxShadow=" 0px 0px 5px 5px tomato"
 				>
 					<Heading py="50px" fontSize="300%">
-						{isCorrect ? pokemonName : hiddenName}
+						{isShowPokemon ? pokemonName : hiddenName}
 					</Heading>
 					<Box>
 						<Input
@@ -120,7 +131,7 @@ export const PokemonMain = () => {
 							<Heading as="h1">Scores: {scores}</Heading>
 							<Box>
 								<Button colorScheme="red" size="lg">
-									Next
+									Reset Scores
 								</Button>
 							</Box>
 						</Flex>
