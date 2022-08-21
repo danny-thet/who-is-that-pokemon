@@ -1,4 +1,12 @@
-import { Box, Button, Flex, Heading, Input, Image } from "@chakra-ui/react";
+import {
+	Box,
+	Button,
+	Flex,
+	Heading,
+	Input,
+	Image,
+	Text,
+} from "@chakra-ui/react";
 import { PokemonClient } from "pokenode-ts";
 import React, { useEffect, useState } from "react";
 
@@ -55,8 +63,8 @@ export const PokemonMain = () => {
 		if (event.key === "Enter") {
 			if (answer === pokemonName) {
 				setScores(scores + 1);
-				setGuessName("");
 			}
+			setGuessName("");
 			setIsShowPokemon(true);
 			setTimeout(async () => {
 				setPokemonImage("");
@@ -77,15 +85,19 @@ export const PokemonMain = () => {
 
 	return (
 		<Box textAlign="center" h="100%" minH="100vh" backgroundColor="#FEF9E7">
-			<Heading
-				py="50px"
-				as="h1"
+			<Text
+				py="16px"
+				fontSize="10vh"
 				background="white"
+				fontFamily="Pokemon Solid"
+				color="#ffcc00"
 				boxShadow="0px 0px 5px 5px lightgray"
-				fontSize="400%"
+				css={{
+					"-webkit-text-stroke": "3px #375da9",
+				}}
 			>
 				Who is That Pokemon?
-			</Heading>
+			</Text>
 			<Flex flexWrap="wrap" mx="auto" width="80%" h="100%" minH="80vh">
 				<Box
 					mx="auto"
@@ -102,6 +114,7 @@ export const PokemonMain = () => {
 					boxShadow="0px 0px 5px 5px lightgray"
 				>
 					<Image
+						w="500px"
 						src={pokemonImage}
 						transition={imageTransition}
 						filter={imageFilter}
@@ -119,11 +132,20 @@ export const PokemonMain = () => {
 					backgroundColor="white"
 					boxShadow=" 0px 0px 5px 5px tomato"
 				>
-					<Heading py="50px" fontSize="300%">
+					<Text
+						py="50px"
+						fontSize="8vh"
+						fontFamily="Pokemon Solid"
+						color="#375da9"
+						css={{
+							"-webkit-text-stroke": "3px #ffcc00",
+						}}
+					>
 						{isShowPokemon ? pokemonName : hiddenName}
-					</Heading>
+					</Text>
 					<Box>
 						<Input
+							size="lg"
 							border="2px"
 							textAlign="center"
 							borderColor="lightgray"
@@ -131,22 +153,23 @@ export const PokemonMain = () => {
 							focusBorderColor="tomato"
 							placeholder="GUESS THE NAME"
 							_placeholder={{ opacity: 0.4, color: "inherit" }}
-							mx="5px"
+							mx="2px"
 							w="70%"
 							value={guessName}
 							onChange={handleOnChange}
 							onKeyDown={handleEnter}
 						/>
-					</Box>
-					<Box mx="auto" display="inline-block" my="30px" w="70%">
-						<Flex justifyContent="space-between">
-							<Heading as="h1">Scores: {scores}</Heading>
-							<Box>
-								<Button colorScheme="red" size="lg" onClick={handleOnClick}>
-									Reset Scores
-								</Button>
-							</Box>
-						</Flex>
+						<Text
+							mt="10px"
+							fontSize="6vh"
+							fontFamily="Pokemon Solid"
+							color="black"
+							css={{
+								"-webkit-text-stroke": "3px #375da9",
+							}}
+						>
+							Scores: {scores}
+						</Text>
 					</Box>
 				</Box>
 			</Flex>
