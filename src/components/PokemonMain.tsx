@@ -1,69 +1,79 @@
 import { Box, Button, Flex, Heading, Input, Image } from "@chakra-ui/react";
-import { Pokemon, PokemonClient } from "pokenode-ts";
+import { PokemonClient } from "pokenode-ts";
 import React, { useEffect, useState } from "react";
 
 const offset = 0;
 const limit = 650;
 
 export const PokemonMain = () => {
-	const [pokemonData, setPokemonData] = useState<Pokemon>();
+	// states
+	const [pokemonName, setPokemonName] = useState<string>("");
+	console.log(
+		"🚀 ~ file: PokemonMain.tsx ~ line 11 ~ PokemonMain ~ pokemonName",
+		pokemonName
+	);
+	const [pokemonImage, setPokemonImage] = useState<string>("");
 	const [isShowPokemon, setIsShowPokemon] = useState<boolean>(false);
-	const pokemonName = pokemonData?.name;
-	const pokemonUrl = pokemonData?.sprites?.front_shiny ?? "";
-
-	const characterCount = pokemonName?.length ?? 0;
-	const toRemove = characterCount - 2;
-
-	const toProduce = toRemove > 0 ? new Array(toRemove + 1).join(" _") : "";
-
-	const hiddenName = pokemonName?.slice(0, -toRemove) + toProduce;
-
 	const [scores, setScores] = useState<number>(0);
+	const [guessName, setGuessName] = useState<string>("");
 
-	const [pokemonImage, setPokemonImage] = useState<string>(pokemonUrl);
+	// data
+	const nameCharacterCounts = pokemonName.length ?? 0;
+	const characterToHide = nameCharacterCounts - 2;
+	const hiddenCharacter =
+		characterToHide > 0 && new Array(characterToHide + 1).join(" _");
+	const hiddenName = pokemonName?.slice(0, -characterToHide) + hiddenCharacter;
+	const imageTransition = isShowPokemon ? "filter 1s ease-out" : "initial";
+	const imageFilter = isShowPokemon ? "initial" : "brightness(0%)";
 
+	// fetching data
 	const fetchPokemon = async (pokemonId: number) => {
 		const api = new PokemonClient();
 		await api
 			.getPokemonById(pokemonId)
 			.then((data) => {
-				setPokemonData(data);
+				setPokemonName(data?.name);
 				setPokemonImage(data?.sprites?.front_shiny ?? "");
 			})
 			.catch((error) => console.error(error));
 	};
 
 	const generateRandomNumber = () => {
-		const id = Math.floor(Math.random() * (limit - offset + 1) + offset);
-
-		return id;
+		return Math.floor(Math.random() * (limit - offset + 1) + offset);
 	};
 
-	const randomId = generateRandomNumber();
+	const randomPokemonId = generateRandomNumber();
 
 	useEffect(() => {
-		fetchPokemon(randomId);
+		fetchPokemon(randomPokemonId);
 	}, []);
 
+	// events
 	const handleEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
 		const answer = event.currentTarget.value;
+
 		if (event.key === "Enter") {
-			if (answer === pokemonData?.name) {
+			if (answer === pokemonName) {
 				setScores(scores + 1);
+				setGuessName("");
 			}
 			setIsShowPokemon(true);
 			setTimeout(async () => {
 				setPokemonImage("");
-				const newId = generateRandomNumber();
-				await fetchPokemon(newId);
+				const newPokemonId = generateRandomNumber();
+				await fetchPokemon(newPokemonId);
 				setIsShowPokemon(false);
 			}, 2000);
 		}
 	};
 
-	const imageTransition = isShowPokemon ? "filter 1s ease-out" : "initial";
+	const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setGuessName(event.target.value);
+	};
 
-	const imageFilter = isShowPokemon ? "initial" : "brightness(0%)";
+	const handleOnClick = () => {
+		setScores(0);
+	};
 
 	return (
 		<Box textAlign="center" h="100%" minH="100vh" backgroundColor="#FEF9E7">
@@ -123,14 +133,16 @@ export const PokemonMain = () => {
 							_placeholder={{ opacity: 0.4, color: "inherit" }}
 							mx="5px"
 							w="70%"
-							onKeyDown={(event) => handleEnter(event)}
+							value={guessName}
+							onChange={handleOnChange}
+							onKeyDown={handleEnter}
 						/>
 					</Box>
 					<Box mx="auto" display="inline-block" my="30px" w="70%">
 						<Flex justifyContent="space-between">
 							<Heading as="h1">Scores: {scores}</Heading>
 							<Box>
-								<Button colorScheme="red" size="lg">
+								<Button colorScheme="red" size="lg" onClick={handleOnClick}>
 									Reset Scores
 								</Button>
 							</Box>
