@@ -1,12 +1,4 @@
-import {
-	Box,
-	Button,
-	Flex,
-	Heading,
-	Input,
-	Image,
-	Text,
-} from "@chakra-ui/react";
+import { Box, Flex, Input, Image, Text } from "@chakra-ui/react";
 import { PokemonClient } from "pokenode-ts";
 import React, { useEffect, useState } from "react";
 
@@ -102,10 +94,8 @@ export const PokemonMain = () => {
 				<Box
 					mx="auto"
 					marginTop="50px"
-					width="500px"
-					minW="380px"
-					minH="380px"
-					maxH="500px"
+					w="380px"
+					h="380px"
 					borderRadius="4px"
 					bgImg="url(/background.png)"
 					bgPos="center"
@@ -114,7 +104,7 @@ export const PokemonMain = () => {
 					boxShadow="0px 0px 5px 5px lightgray"
 				>
 					<Image
-						w="500px"
+						w="400px"
 						src={pokemonImage}
 						transition={imageTransition}
 						filter={imageFilter}
@@ -123,7 +113,8 @@ export const PokemonMain = () => {
 				</Box>
 				<Box
 					w="500px"
-					maxH="500px"
+					minW="380px"
+					minH="500px"
 					mx="auto"
 					my="50px"
 					border="2px"
@@ -133,8 +124,9 @@ export const PokemonMain = () => {
 					boxShadow=" 0px 0px 5px 5px tomato"
 				>
 					<Text
-						py="50px"
-						fontSize="8vh"
+						p="50px"
+						fontSize="350%"
+						minH="60%"
 						fontFamily="Pokemon Solid"
 						color="#375da9"
 						css={{
@@ -158,6 +150,7 @@ export const PokemonMain = () => {
 							value={guessName}
 							onChange={handleOnChange}
 							onKeyDown={handleEnter}
+							fontSize="150%"
 						/>
 						<Text
 							mt="10px"
