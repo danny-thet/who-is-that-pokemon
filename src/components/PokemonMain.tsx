@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { PokemonClient } from "pokenode-ts";
 import React, { useEffect, useState } from "react";
 import { PokemonGuessBox } from "./PokemonGuessBox";
@@ -89,7 +89,7 @@ export const PokemonMain = () => {
 			>
 				Who is That Pokemon?
 			</Text>
-			<Flex flexWrap="wrap" mx="auto" width="80%" h="100%" minH="80vh">
+			<Box mx="auto" width="80%" h="100%" minH="100vh">
 				<PokemonImageBox
 					pokemonImage={pokemonImage}
 					imageTransition={imageTransition}
@@ -103,7 +103,7 @@ export const PokemonMain = () => {
 					onChangeName={handleOnChange}
 					onEnterName={handleEnter}
 				/>
-			</Flex>
+			</Box>
 		</Box>
 	);
 };

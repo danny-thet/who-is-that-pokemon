@@ -13,10 +13,10 @@ export const PokemonImageBox = ({
 }: PokemonImageBox) => {
 	return (
 		<Box
-			w="380px"
-			h="380px"
+			w="400px"
+			h="300px"
 			mx="auto"
-			mt="50px"
+			mt="20px"
 			bgImg="url(/background.png)"
 			bgPos="center"
 			bgRepeat="no-repeat"
@@ -24,13 +24,16 @@ export const PokemonImageBox = ({
 			borderRadius="4px"
 			boxShadow="0px 0px 5px 5px lightgray"
 		>
-			<Image
-				w="400px"
-				alt=""
-				transition={imageTransition}
-				filter={imageFilter}
-				src={pokemonImage}
-			/>
+			{pokemonImage && (
+				<Image
+					w="400px"
+					h="300px"
+					alt=""
+					transition={imageTransition}
+					filter={imageFilter}
+					src={pokemonImage}
+				/>
+			)}
 		</Box>
 	);
 };

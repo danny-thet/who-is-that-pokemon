@@ -19,9 +19,9 @@ export const PokemonGuessBox = ({
 }: PokemonGuessBox) => {
 	return (
 		<Box
-			w="500px"
-			minH="450px"
-			m="50px auto"
+			w="400px"
+			minH="380px"
+			m="20px auto"
 			borderRadius="4px"
 			backgroundColor="white"
 			boxShadow={`0px 0px 5px 5px ${boxShadowColor}`}
@@ -29,7 +29,7 @@ export const PokemonGuessBox = ({
 			<Text
 				p="10%"
 				maxW="90%"
-				minH="60%"
+				minH="70%"
 				fontSize="350%"
 				fontFamily="Pokemon Solid"
 				color="#375da9"
