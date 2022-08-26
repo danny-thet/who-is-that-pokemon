@@ -75,7 +75,7 @@ export const PokemonMain = () => {
 	};
 
 	return (
-		<Box textAlign="center" h="100%" minH="100vh" backgroundColor="#FEF9E7">
+		<Box textAlign="center" h="100%">
 			<Text
 				py="16px"
 				fontSize="300%"
@@ -89,7 +89,7 @@ export const PokemonMain = () => {
 			>
 				Who is That Pokemon?
 			</Text>
-			<Box mx="auto" width="80%" h="100%" minH="100vh">
+			<Box mx="auto" width="80%" h="100%">
 				<PokemonImageBox
 					pokemonImage={pokemonImage}
 					imageTransition={imageTransition}
